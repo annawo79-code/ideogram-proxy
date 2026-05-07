@@ -4,7 +4,15 @@ const fetch = require("node-fetch");
 const FormData = require("form-data");
 
 const app = express();
-app.use(cors()); // Allow all origins
+
+// Explicit CORS for all origins
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+app.options("*", cors()); // Handle preflight requests
 app.use(express.json());
 
 // Health check
